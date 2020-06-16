@@ -1,12 +1,11 @@
 import requests
-import os
+from bs4 import BeautifulSoup
 
-
-os.makedirs("/Users/Юрис/Desktop/library/books", exist_ok=True)
-for i in range(1, 11):
-    url = f'http://tululu.org/txt.php?id={i}/'
-    ans = requests.get(url, allow_redirects=False)
-    if((ans.status_code // 100) == 2):
-        with open(f"/Users/Юрис/Desktop/library/books/id{i}.txt", "w") as my_file:
-            my_file.write(ans.text)
-
+url = 'http://tululu.org/b1/'
+response = requests.get(url)
+response.raise_for_status()
+soup = BeautifulSoup(response.text, 'lxml')
+main_inf = soup.find('div', id='content').find('h1').text
+inf_list = main_inf.split(' :: ')
+print("Заголовок:", inf_list[0].strip())
+print("Автор:", inf_list[1].strip())
