@@ -16,10 +16,9 @@ def download_text(url, filename, folder):
 
 def download_image(url, filename, folder):
     base = '/Users/Юрис/Desktop/library/'
-    prototype = filename.split('/')[-1]
-    final_filename = os.path.join(base, folder, prototype)
     ans = requests.get(url)
     ans.raise_for_status()
+    final_filename = os.path.join(base, folder, filename.split('/')[-1])
     with open(final_filename, "wb") as my_file:
         my_file.write(ans.content)
 
@@ -35,9 +34,13 @@ for i in range(1, 11):
         response = requests.get(html_url)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'lxml')
-        image_filename = soup.find('div', class_='bookimage').find('img')['src']
-        file_image = urljoin('http://tululu.org/', image_filename)
+#        image_filename = soup.find('div', class_='bookimage').find('img')['src']
+#        file_image = urljoin('http://tululu.org/', image_filename)
         text_filename = soup.find('div', id='content').find('h1').text.split(' :: ')[0].strip() + ".txt"
-        download_text(text_url, text_filename, 'books/')
-        download_image(file_image, image_filename, 'images/')
+        comments_list = soup.find_all('div', class_='texts')
+        print(text_filename)
+        for i in comments_list:
+            print(i.find('span', class_='black').text)
+#        download_text(text_url, text_filename, 'books/')
+#        download_image(file_image, image_filename, 'images/')
 
