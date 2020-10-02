@@ -38,9 +38,6 @@ for i in range(1, 11):
 #        file_image = urljoin('http://tululu.org/', image_filename)
         text_filename = soup.find('div', id='content').find('h1').text.split(' :: ')[0].strip()
         genres_list = soup.find('span', class_='d_book').find_all('a')
-        print("Заголовок:", text_filename)
-        for j in genres_list:
-            print(j.text)
 #        download_text(text_url, text_filename, 'books/')
 #        download_image(file_image, image_filename, 'images/')
 

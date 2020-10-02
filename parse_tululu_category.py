@@ -4,10 +4,12 @@ from bs4 import BeautifulSoup
 from pathvalidate import sanitize_filename
 from urllib.parse import urljoin
 
-html_url = 'http://tululu.org/l55/'
-response = requests.get(html_url)
-response.raise_for_status()
-soup = BeautifulSoup(response.text, 'lxml')
-source = soup.find('table', class_='d_book').find_all('tr')[1].find('a')['src'].text
-final_link = urljoin('http://tululu.org', source)
-print(final_link)
+for j in range(0, 9):
+    html_url = f'http://tululu.org/l55/{j}/'
+    response = requests.get(html_url)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.text, 'lxml')
+    pre_sources_list = soup.find_all('table', class_='d_book')
+    for i in pre_sources_list:
+        final_source = urljoin('http://tululu.org', i.find('a')['href'])
+        print(final_source)
