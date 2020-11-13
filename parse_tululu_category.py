@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from pathvalidate import sanitize_filename
 from urllib.parse import urljoin
 
-for j in range(0, 9):
+for j in range(0, 4):
     html_url = f'http://tululu.org/l55/{j}/'
     response = requests.get(html_url)
     response.raise_for_status()
